@@ -1,0 +1,46 @@
+[
+    {
+      "id": 1,
+      "title": "House Vote for Net Neutrality 2011",
+      "link": "https://www.govtrack.us/congress/votes/112-2011/h252",
+      "rFor": 2,
+      "rAgainst": 234,
+      "dFor": 177,
+      "dAgainst": 6,
+      "summary": "The principle that Internet service providers should enable access to all content and applications regardless of the source, and without favoring or blocking particular products or websites.",
+      "billLink": ""
+    },
+    {
+      "id": 2,
+      "title": "Senate Vote for Net Neutrality 2011",
+      "link": "https://www.govtrack.us/congress/votes/112-2011/s200",
+      "rFor": 0,
+      "rAgainst": 46,
+      "dFor": 52,
+      "dAgainst": 0,
+      "summary": "The principle that Internet service providers should enable access to all content and applications regardless of the source, and without favoring or blocking particular products or websites.",
+      "billLink": ""
+    },
+    {
+      "id": 3,
+      "title": "Money in Elections and Voting\n - Campaign Finance Disclosure Requirements",
+      "link": "http://votesmart.org/bill/votes/32154\n",
+      "rFor": 0,
+      "rAgainst": 39,
+      "dFor": 59,
+      "dAgainst": 0,
+      "summary": "New disclosure requirements for political advertisements and other regulations for the financing of campaigns and political advertisements.",
+      "billLink": ""
+    },
+    {
+      "id": 4,
+      "title": "DISCLOSE Act",
+      "link": "http://votesmart.org/bill/votes/41152",
+      "rFor": 0,
+      "rAgainst": 45,
+      "dFor": 53,
+      "dAgainst": 0,
+      "summary": "Vote on a motion to invoke cloture on a bill that submits a constitutional amendment to the voters that requires certain organizations involved in political advertising to disclose information on individuals or groups who donate $10,000 or more.",
+      "billLink": ""
+    }
+   ]
