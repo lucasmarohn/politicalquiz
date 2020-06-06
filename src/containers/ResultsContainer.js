@@ -3,9 +3,9 @@ import VoteDetails from '../components/VoteDetails'
 
 
 function ResultsContainer({dataSet}) {
-    const results = dataSet.map((data) => {
+    const results = dataSet.map((data, index) => {
         return (
-            <VoteDetails data={data} />
+            <VoteDetails key={index} data={data} />
         )
     })
     return (

@@ -22,14 +22,6 @@ summary:hover .tag:nth-child(2) {
   cursor: pointer;
 }
 
-summary .tag:nth-child(2):after {
-  transition: opacity .1s ease-out;
-  opacity: 0;
-  content: 'Click for more information';
-  color: #000000;
-  margin-left: 20px;
-}
-
 summary:hover .tag:nth-child(2):after {
   opacity: .5;
 }

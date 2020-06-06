@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
-import { Section, Title, Content, Container, Notification, Box, Tag, Button } from 'rbx'
+import { Section, Title, Column, Content, Container, Notification, Box, Tag, Button } from 'rbx'
 import VoteDetails from '../components/VoteDetails'
-import ResultsContainer from '../containers/ResultsContainer'
 
 function ResultTotalBox({sourceData, answerData}) {
 
     const [filterState, setFilterState] = useState(false)
+    const [detailsOpen, setDetailsOpen] = useState(false)
+
+    const handleDetailsOpen = () => {
+        setDetailsOpen(!detailsOpen)
+    }
 
     const handleFilterStateAll = () => {
         setFilterState(false)
@@ -17,6 +21,8 @@ function ResultTotalBox({sourceData, answerData}) {
     const handleFilterStateRepublican = () => {
         setFilterState('r')
     }
+
+    
     
     const whoAgrees = (index) => {
         const source = sourceData[index]
@@ -71,48 +77,55 @@ function ResultTotalBox({sourceData, answerData}) {
     const percent = agreeWithDemocrat === agreeWithRepublican ? null : (agreeWithDemocrat > agreeWithRepublican ? dFinalPercent : rFinalPercent)
     
     return (
-        <Section>
             <Container>
                 <Section>
-                <Content size="large" align="center">
-                    
+                    <Box>
+                    <Content size="medium" align="center">
                         {(party === 'Democrat' || party === 'Republican') && <Notification color={party === 'Democrat' ? 'link' : 'danger'}>
-                            <Title>You are a {party}</Title>
-                            <p>You agree with the {party} party {percent}% of the time</p>
+                            <p style={{marginBottom: 0, opacity: .6, fontSize: '12px'}}>YOU VOTED WITH THE</p>
+                            <Title style={{margin: 0}}>{party} Party</Title>
+                            <p style={{marginTop: '5px'}}><span style={{opacity: .6, }}>You agree</span> <strong>{percent}%</strong> <span style={{opacity: .6, }}>of the time</span></p>
                         </Notification>}
                         { party === 'Independent' && <Notification color="success">
-                            <Title color="success">You are an {party}</Title>
+                            <Title color="success">You voted {party}</Title>
                             <p>You agree both the Democrat and Republican parties 50% of the time</p>
                         </Notification>}
-                </Content>
-                </Section>
-
-                <Section>
-                    <Box>
+                    </Content>
                     <Content align="left">
-                        <Title>Your Answers</Title>
-                        <p>Click the answer for more information</p>
-                        <Button.Group>
-                            <Button onClick={handleFilterStateAll}>Show All My Responses</Button>
-                            <Button color="link" onClick={handleFilterStateDemocrat}>Show where I agree with Democrats</Button>
-                            <Button color="danger" onClick={handleFilterStateRepublican}>Show where I agree with Republicans</Button>
+                        <Title size={4} style={{marginBottom: '10px'}}>Your Answers</Title>
+                        <Button.Group size="small" hasAddons>
+                            <Button onClick={handleFilterStateAll} color={filterState === false ? null : 'light'}>Show All My Responses</Button>
+                            <Button onClick={handleFilterStateDemocrat} color={filterState === 'd' ? null : 'light'}>Show where I agree with Democrats</Button>
+                            <Button onClick={handleFilterStateRepublican} color={filterState === 'r' ? null : 'light'}>Show where I agree with Republicans</Button>
                         </Button.Group>
+                        <Button size="small" onClick={handleDetailsOpen}>{detailsOpen ? 'Hide Details For All Responses' : 'Show Details For All Responses'}</Button>
+                        <hr />
                         
                             {answerData.map((data, index) => {
                                 if( filterState === false || ((whoAgrees(index) === 'Democrat' && filterState === 'd') || (whoAgrees(index) === 'Republican' && filterState === 'r')) ) {
                                     return (
                                     <div key={index} style={{marginBottom: '20px'}}>
-                                        <details>
+                                        <details open={detailsOpen}>
                                             <summary>
-                                            {<Tag.Group size="large" gapless>
-                                                <Tag color="dark">{index + 1}</Tag>
-                                                <Tag style={{display: 'flex', justifyContent: 'flex-start', flexGrow: '1'}}>{sourceData[index].title}</Tag>
-                                                <Tag color={whoAgrees(index) === 'Democrat' ? 'link' : 'danger'}>You voted {data} with the {whoAgrees(index)}s</Tag>
-                                            </Tag.Group>} 
+                                            {<Column.Group>
+                                                <Column narrow>
+                                                    <Tag>{index + 1}</Tag>
+                                                </Column>
+                                                <Column>
+                                                    <Title style={{marginBottom: '5px'}} size={6}>{sourceData[index].title}</Title>
+                                                    <Tag.Group gapless>
+                                                        <Tag size="small" color={whoAgrees(index) === 'Democrat' ? 'link' : 'danger'}>You voted {data} with the {whoAgrees(index)}s</Tag> 
+                                                        <Tag>Click for more information</Tag>
+                                                    </Tag.Group>
+                                                </Column>
+                                            </Column.Group>} 
+                                            
                                             </summary>
                                             <div style={{marginTop: '10px'}}>
                                                 <VoteDetails data={sourceData[index]}/>
+                                                <hr />
                                             </div>
+                                            
                                     </details>
                                     </div>
                                     )
@@ -124,18 +137,7 @@ function ResultTotalBox({sourceData, answerData}) {
                     </Content>
                     </Box>
                 </Section>
-                <Section>
-                    <Box>
-                    <details>
-                        <summary>
-                        <Title align="left">Show Details for All > </Title>
-                        </summary>
-                        <ResultsContainer dataSet={sourceData} />
-                    </details>
-                    </Box>
-                </Section>
             </Container>
-        </Section>
     );
 
 }

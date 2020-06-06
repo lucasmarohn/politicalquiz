@@ -1,27 +1,28 @@
 import React from 'react';
-import { Section, Box, Title, Content, Column } from 'rbx'
+import { Section, Title, Content, Column } from 'rbx'
 import { PieChart } from 'react-minimal-pie-chart'
 
 
 function VoteDetails({data}) {
+
+    
     const totalVotesD = data.dFor + data.dAgainst
     const totalVotesR = data.rFor + data.rAgainst
     return (
-        <Box key={data.id}>
-            <Section>
+            <Section key={data.id}>
             <Column.Group gapSize={8}>
-                <Column align="left" size="half">
-                    <Title size={2}>{data.title}</Title>
-                    <Content size="large">
+                <Column align="left" size="two-fifths">
+                    <Title size={3}>{data.title}</Title>
+                    <Content size="small">
                         <a href={data.link} target="_blank" rel="noopener noreferrer">{data.link}</a>
                     </Content>
-                    <Content size="large">
+                    <Content>
                         {data.summary}
                     </Content>
                     
                 </Column>
                 <Column>
-                    <Content>
+                    <Content align="center">
                         <Title size={6}>Republicans</Title>
                         <PieChart 
                         data={[
@@ -44,7 +45,7 @@ function VoteDetails({data}) {
                     </Content>
                 </Column>
                 <Column>
-                    <Content>
+                    <Content align="center">
                         <Title size={6}>Democrats</Title>
                         <PieChart 
                         data={[
@@ -67,8 +68,7 @@ function VoteDetails({data}) {
                     </Content>
                 </Column>
             </Column.Group>
-            </Section>
-        </Box>
+        </Section>
     );
 }
 
