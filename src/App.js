@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Navbar, Section, Column, Container, Box, Title, Button, Content, Tag } from 'rbx'
+import { Section, Container, Box, Title, Button, Content, Tag } from 'rbx'
+
+import Cookies from 'js-cookie'
 
 import sourceData from './data/simpledata.json'
 import ResultsContainer from './containers/ResultsContainer'
@@ -11,14 +13,17 @@ import "rbx/index.css";
 import './App.css';
 
 function App() {
+  console.log(Cookies.get('response'))
   const [beginQuiz, setBeginQuiz] = useState(false)
   const [skipQuiz, setSkipQuiz] = useState(false)
 
   const [quizInProgress, setQuizInProgress] = useState(true)
 
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [answerData, setAnswerData] = useState([])
+  const [answerData, setAnswerData] = useState(Cookies.get('response') ? Cookies.get('response').split(',') : [])
   const currentData = sourceData[currentIndex]
+
+  console.log(answerData)
 
   const handleBeginQuiz = () => {
     setBeginQuiz(true)
@@ -30,6 +35,7 @@ function App() {
     setQuizInProgress(true)
     setCurrentIndex(0)
     setAnswerData([])
+    Cookies.set('response', '')
   }
 
   const handleSkipQuiz = () => {
@@ -39,26 +45,29 @@ function App() {
 
   const voteYes = () => {
     setAnswerData([...answerData, 'Yes'])
-    incrementQuiz()
+    console.log(answerData)
+    incrementQuiz('Yes')
   }
 
   const voteNo = () => {
     setAnswerData([...answerData, 'No'])
-    incrementQuiz()
+    console.log(answerData)
+    incrementQuiz('No')
   }
 
   const goBack = () => {
     const currentAnswerData = answerData
     
     if(currentIndex - 1 >= 0 ) {
-      currentAnswerData.pop()
+      setAnswerData([...currentAnswerData.pop()])
       setCurrentIndex(currentIndex - 1)
     }
   }
 
-  const incrementQuiz = () => {
+  const incrementQuiz = (ans) => {
     if(currentIndex >= sourceData.length - 1) {
       // We're at the end of the quiz!
+      Cookies.set('response', [...answerData, ans].toString())
       setQuizInProgress(false)
     } else {
       setCurrentIndex(currentIndex + 1)
@@ -67,20 +76,10 @@ function App() {
 
   return (
     <div className="App">
-      <Navbar>
-      <Column.Group style={{margin: 0, width: '100%'}}>
-        <Column align="left" style={{margin: '0', display: 'flex',flexDirection: 'column', justifyContent: 'center'}}>
-            Congress Quiz
-        </Column>
-          
-        <Column align="right" narrow>
-          <Button style={{marginRight: '15px'}} onClick={handleRestartQuiz}>Restart Quiz</Button>
-        </Column>
-      </Column.Group>
-      </Navbar>
-      
-      
-      {!beginQuiz && !skipQuiz &&  
+
+
+      {skipQuiz && <Button style={{marginTop: '15px'}} color="success" size="large" onClick={handleRestartQuiz}>Start Quiz</Button>}
+      { ((!beginQuiz && !skipQuiz) && !Cookies.get('response') ) &&  
       <Container align="left" style={{height: '100vh', maxHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
         <Box style={{maxWidth: '800px', margin: '0 auto', padding: '50px'}}>
           
@@ -97,24 +96,26 @@ function App() {
             </ul>
           </Content>
 
-          <Button.Group size="large">
-            <Button onClick={handleBeginQuiz} color="success">Begin the Quiz!</Button>
-            <Button onClick={handleSkipQuiz} >Skip the Quiz</Button>
+          <Button.Group >
+            <Button onClick={handleBeginQuiz} color="success" size="large">Begin the Quiz!</Button>
+            <Button onClick={handleSkipQuiz} color="white" style={{opacity: .5}}>Skip the quiz and view data</Button>
           </Button.Group>
 
         </Box>
       </Container>}
 
 
-      { (beginQuiz && quizInProgress && !skipQuiz) && <QuizBox currentData={currentData} totalDataLength={sourceData.length} voteYes={voteYes} voteNo={voteNo} goBack={goBack} />}
+      {((beginQuiz && quizInProgress && !skipQuiz) && !Cookies.get('response') )&& <QuizBox currentData={currentData} totalDataLength={sourceData.length} voteYes={voteYes} voteNo={voteNo} goBack={goBack} />}
 
-      {(answerData.length > 0 && !quizInProgress) && <ResultTotalBox sourceData={sourceData} answerData={answerData} />}
+      {((answerData.length > 0 && !quizInProgress) || Cookies.get('response') ) && <ResultTotalBox handleRestartQuiz={handleRestartQuiz} sourceData={sourceData} answerData={answerData} />}
       
-      {(answerData.length > 0 && !quizInProgress) && 
+      {((answerData.length > 0 && !quizInProgress) || Cookies.get('response')  ) && 
         <ResultBox sourceData={sourceData} answerData={answerData} />
       }
 
       {skipQuiz && <Section><Container><Box><ResultsContainer dataSet={sourceData} /></Box></Container></Section>}
+
+      
       
     </div>
   );

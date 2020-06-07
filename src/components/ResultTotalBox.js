@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { Section, Title, Column, Content, Container, Notification, Box, Tag, Button } from 'rbx'
 import VoteDetails from '../components/VoteDetails'
+import Cookies from 'js-cookie'
 
-function ResultTotalBox({sourceData, answerData}) {
+function ResultTotalBox({sourceData, answerData, handleRestartQuiz}) {
 
     const [filterState, setFilterState] = useState(false)
     const [detailsOpen, setDetailsOpen] = useState(false)
@@ -93,14 +94,17 @@ function ResultTotalBox({sourceData, answerData}) {
                     </Content>
                     <Content align="left">
                         <Title size={4} style={{marginBottom: '10px'}}>Your Answers</Title>
-                        <Button.Group size="small" hasAddons>
+                        {(agreeWithDemocrat > 0 && agreeWithRepublican > 0) && <Button.Group size="small" hasAddons>
+                        {Cookies.get('response') && <Button color="success" onClick={handleRestartQuiz}>Restart Quiz</Button>}
                             <Button onClick={handleFilterStateAll} color={filterState === false ? null : 'light'}>Show All My Responses</Button>
                             <Button onClick={handleFilterStateDemocrat} color={filterState === 'd' ? null : 'light'}>Show where I agree with Democrats</Button>
                             <Button onClick={handleFilterStateRepublican} color={filterState === 'r' ? null : 'light'}>Show where I agree with Republicans</Button>
-                        </Button.Group>
-                        <Button size="small" onClick={handleDetailsOpen}>{detailsOpen ? 'Hide Details For All Responses' : 'Show Details For All Responses'}</Button>
-                        <hr />
-                        
+                        </Button.Group>}
+
+                        {(agreeWithDemocrat > 0 && agreeWithRepublican > 0) &&
+                        <hr />}
+                        <Button size="small" style={{marginBottom: (agreeWithDemocrat > 0 && agreeWithRepublican > 0) ? 20 : 0}} onClick={handleDetailsOpen}>{detailsOpen ? 'Hide Details For All Responses' : 'Show Details For All Responses'}</Button>
+                        {!(agreeWithDemocrat > 0 && agreeWithRepublican > 0) && <hr />}
                             {answerData.map((data, index) => {
                                 if( filterState === false || ((whoAgrees(index) === 'Democrat' && filterState === 'd') || (whoAgrees(index) === 'Republican' && filterState === 'r')) ) {
                                     return (
@@ -122,7 +126,7 @@ function ResultTotalBox({sourceData, answerData}) {
                                             
                                             </summary>
                                             <div style={{marginTop: '10px'}}>
-                                                <VoteDetails data={sourceData[index]}/>
+                                                <VoteDetails data={sourceData[index]} voteType={data} />
                                                 <hr />
                                             </div>
                                             

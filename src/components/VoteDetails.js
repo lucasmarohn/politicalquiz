@@ -1,13 +1,13 @@
 import React from 'react';
 import { Section, Title, Content, Column } from 'rbx'
-import { PieChart } from 'react-minimal-pie-chart'
+import PieChartComponent from './PieChartComponent'
 
 
-function VoteDetails({data}) {
+function VoteDetails({data, voteType = 'Yes'}) {
 
-    
     const totalVotesD = data.dFor + data.dAgainst
     const totalVotesR = data.rFor + data.rAgainst
+
     return (
             <Section key={data.id}>
             <Column.Group gapSize={8}>
@@ -24,30 +24,14 @@ function VoteDetails({data}) {
                 <Column>
                     <Content align="center">
                         <Title size={6}>Republicans</Title>
-                        <PieChart 
-                        data={[
-                            { value: data.rFor, color: '#EB5757' },
-                            { value: data.rAgainst, color: '#EFEFEF' }
-                        ]} 
-                        totalValue={totalVotesR}
-                        lineWidth={20}
-                        label={({ dataEntry }) => `${Math.round(data.rFor / totalVotesR * 100 )}%`}
-                        labelStyle={{
-                            fontWeight: 'bold',
-                            fill: '#EB5757',
-                        }}
-                        labelPosition={0}
-                        />
-                        <p>
-                        For: {data.rFor} <br/>
-                        Against: {data.rAgainst}
-                        </p>
+                        <PieChartComponent voteType={voteType} totalVotes={totalVotesR} voteFor={data.rFor} voteAgainst={data.rAgainst} primaryColor="#EB5757" secondaryColor="#EFEFEF" />
                     </Content>
                 </Column>
                 <Column>
                     <Content align="center">
                         <Title size={6}>Democrats</Title>
-                        <PieChart 
+                        <PieChartComponent voteType={voteType} totalVotes={totalVotesD} voteFor={data.dFor} voteAgainst={data.dAgainst} primaryColor="#2F80ED" secondaryColor="#EFEFEF" />
+                        {/* <PieChart 
                         data={[
                             { title: 'For', value: data.dFor, color: '#2F80ED' },
                             { title: 'Against', value: data.dAgainst, color: '#EFEFEF' },
@@ -64,7 +48,7 @@ function VoteDetails({data}) {
                         <p>
                         For: {data.dFor}  <br/>
                         Against:  {data.dAgainst}
-                        </p>
+                        </p> */}
                     </Content>
                 </Column>
             </Column.Group>
