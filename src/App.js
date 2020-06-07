@@ -3,7 +3,7 @@ import { Section, Container, Box, Title, Button, Content, Tag } from 'rbx'
 
 import Cookies from 'js-cookie'
 
-import sourceData from './data/simpledata.json'
+import sourceData from './data/datasmall.json'
 import ResultsContainer from './containers/ResultsContainer'
 import QuizBox from './components/QuizBox'
 import ResultBox from './components/ResultBox'
