@@ -84,7 +84,10 @@ function App() {
       <QuizIntro handleBeginQuiz={handleBeginQuiz} handleSkipQuiz={handleSkipQuiz} />}
 
 
-      {((beginQuiz && quizInProgress && !skipQuiz) && !Cookies.get('response') )&& <QuizBox currentData={currentData} totalDataLength={sourceData.length} voteYes={voteYes} voteNo={voteNo} goBack={goBack} />}
+      {((beginQuiz && quizInProgress && !skipQuiz) && !Cookies.get('response') ) &&
+      <QuizBox handleSkipQuiz={handleSkipQuiz} currentData={currentData} totalDataLength={sourceData.length} voteYes={voteYes} voteNo={voteNo} goBack={goBack} />
+    
+      }
 
       {((answerData.length > 0 && !quizInProgress) || Cookies.get('response') ) && <ResultTotalBox handleRestartQuiz={handleRestartQuiz} sourceData={sourceData} answerData={answerData} />}
       
