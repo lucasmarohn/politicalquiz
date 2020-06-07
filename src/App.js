@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Section, Container, Box, Title, Button, Content, Tag } from 'rbx'
+import { Section, Container, Box, Button } from 'rbx'
 
 import Cookies from 'js-cookie'
 
@@ -8,6 +8,7 @@ import ResultsContainer from './containers/ResultsContainer'
 import QuizBox from './components/QuizBox'
 import ResultBox from './components/ResultBox'
 import ResultTotalBox from './components/ResultTotalBox'
+import QuizIntro from './components/QuizIntro'
 
 import "rbx/index.css";
 import './App.css';
@@ -80,29 +81,7 @@ function App() {
 
       {skipQuiz && <Button style={{marginTop: '15px'}} color="success" size="large" onClick={handleRestartQuiz}>Start Quiz</Button>}
       { ((!beginQuiz && !skipQuiz) && !Cookies.get('response') ) &&  
-      <Container align="left" style={{height: '100vh', maxHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-        <Box style={{maxWidth: '800px', margin: '0 auto', padding: '50px'}}>
-          
-          <Title size={1}>Hello!</Title>
-          <Content align="left" size="medium">
-            <p>Hi! Welcome to the quiz! Here's how it works:</p>
-
-            <ul>
-              <li>You'll be asked to vote <Tag size="medium" color="success">for</Tag> or <Tag size="medium" color="warning">against</Tag> 50 pieces of legislation that have been voted on by the United States Congress</li>
-              <li>Each of these pieces of legislation will <strong>include a brief summary</strong> of the contents and intention of the legislation.</li>
-              <li>The chosen legislation covers a broad range of topics</li>
-              <li><strong>We include links to our sources</strong> (vote counts and the archive of the legislation) at the end of the quiz</li>
-              <li>Some questions are duplicates, when a bill was voted on in the house and the senate. We include both versions in some cases.</li>
-            </ul>
-          </Content>
-
-          <Button.Group >
-            <Button onClick={handleBeginQuiz} color="success" size="large">Begin the Quiz!</Button>
-            <Button onClick={handleSkipQuiz} color="white" style={{opacity: .5}}>Skip the quiz and view data</Button>
-          </Button.Group>
-
-        </Box>
-      </Container>}
+      <QuizIntro handleBeginQuiz={handleBeginQuiz} handleSkipQuiz={handleSkipQuiz} />}
 
 
       {((beginQuiz && quizInProgress && !skipQuiz) && !Cookies.get('response') )&& <QuizBox currentData={currentData} totalDataLength={sourceData.length} voteYes={voteYes} voteNo={voteNo} goBack={goBack} />}
@@ -114,7 +93,7 @@ function App() {
       }
 
       {skipQuiz && <Section><Container><Box><ResultsContainer dataSet={sourceData} /></Box></Container></Section>}
-
+      <p style={{display: 'block', textAlign: 'center', opacity: .5, fontSize: '14px'}}>Favicon made by <a href="http://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a></p>
       
       
     </div>

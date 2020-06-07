@@ -31,24 +31,6 @@ function VoteDetails({data, voteType = 'Yes'}) {
                     <Content align="center">
                         <Title size={6}>Democrats</Title>
                         <PieChartComponent voteType={voteType} totalVotes={totalVotesD} voteFor={data.dFor} voteAgainst={data.dAgainst} primaryColor="#2F80ED" secondaryColor="#EFEFEF" />
-                        {/* <PieChart 
-                        data={[
-                            { title: 'For', value: data.dFor, color: '#2F80ED' },
-                            { title: 'Against', value: data.dAgainst, color: '#EFEFEF' },
-                        ]} 
-                        totalValue={totalVotesD}
-                        lineWidth={20}
-                        label={({ dataEntry }) => `${Math.round(data.dFor / totalVotesD * 100 )}%`}
-                        labelStyle={{
-                            fontWeight: 'bold',
-                            fill: '#2F80ED',
-                        }}
-                        labelPosition={0}
-                        />
-                        <p>
-                        For: {data.dFor}  <br/>
-                        Against:  {data.dAgainst}
-                        </p> */}
                     </Content>
                 </Column>
             </Column.Group>
