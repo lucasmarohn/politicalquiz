@@ -33,7 +33,9 @@ function VoteDetails({data, voteType = 'Yes'}) {
                 <Column>
                     <Content align="center">
                         <Title size={6}>Democrats</Title>
+
                         <PieChartComponent voteType={voteType} totalVotes={totalVotesD} voteFor={data.gsx$dfor.$t} voteAgainst={data.gsx$dagainst.$t} primaryColor="#2F80ED" secondaryColor="#EFEFEF" />
+
                     </Content>
                 </Column>
             </Column.Group>

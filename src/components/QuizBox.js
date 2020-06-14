@@ -5,7 +5,7 @@ import React from 'react';
 import { Container, Column, Box, Title, Content, Button } from 'rbx'
 
 
-function QuizBox({currentData, totalDataLength, voteYes, voteNo, goBack}) {
+function QuizBox({handleSkipQuiz, currentData, totalDataLength, voteYes, voteNo, goBack}) {
   return (
     <Container style={{display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: '100vh'}}>
       <Box style={{paddingTop: '100px', paddingBottom: '100px'}}>
@@ -35,6 +35,9 @@ function QuizBox({currentData, totalDataLength, voteYes, voteNo, goBack}) {
 
           </Column.Group>
       </Box>
+      <Button.Group>
+        <Button style={{margin: '15px auto 0 auto', opacity: .5}} size="medium" onClick={handleSkipQuiz}>Skip Quiz and View Legislation</Button>
+      </Button.Group>
     </Container>
   );
 }
