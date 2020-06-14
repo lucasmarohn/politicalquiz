@@ -5,50 +5,35 @@ import PieChartComponent from './PieChartComponent'
 
 function VoteDetails({data, voteType = 'Yes'}) {
 
-    const totalVotesD = data.dFor + data.dAgainst
-    const totalVotesR = data.rFor + data.rAgainst
+    const totalVotesD = parseInt(data.gsx$dfor.$t) + parseInt(data.gsx$dagainst.$t)
+    const totalVotesR = parseInt(data.gsx$rfor.$t) + parseInt(data.gsx$ragainst.$t)
+
+    console.log('d',totalVotesD)
+    console.log('r', totalVotesR)
 
     return (
             <Section key={data.id}>
             <Column.Group gapSize={8}>
                 <Column align="left" size="two-fifths">
-                    <Title size={3}>{data.title}</Title>
+                    <Title size={3}>{data.gsx$title.$t}</Title>
                     <Content size="small">
-                        <a href={data.link} target="_blank" rel="noopener noreferrer">{data.link}</a>
+                        <a href={data.gsx$link.$t} target="_blank" rel="noopener noreferrer">{data.gsx$link.$t}</a>
                     </Content>
                     <Content>
-                        {data.summary}
+                        {data.gsx$summary.$t}
                     </Content>
                     
                 </Column>
                 <Column>
                     <Content align="center">
                         <Title size={6}>Republicans</Title>
-                        <PieChartComponent voteType={voteType} totalVotes={totalVotesR} voteFor={data.rFor} voteAgainst={data.rAgainst} primaryColor="#EB5757" secondaryColor="#EFEFEF" />
+                        <PieChartComponent voteType={voteType} totalVotes={totalVotesR} voteFor={data.gsx$rfor.$t} voteAgainst={data.gsx$ragainst.$t} primaryColor="#EB5757" secondaryColor="#EFEFEF" />
                     </Content>
                 </Column>
                 <Column>
                     <Content align="center">
                         <Title size={6}>Democrats</Title>
-                        <PieChartComponent voteType={voteType} totalVotes={totalVotesD} voteFor={data.dFor} voteAgainst={data.dAgainst} primaryColor="#2F80ED" secondaryColor="#EFEFEF" />
-                        {/* <PieChart 
-                        data={[
-                            { title: 'For', value: data.dFor, color: '#2F80ED' },
-                            { title: 'Against', value: data.dAgainst, color: '#EFEFEF' },
-                        ]} 
-                        totalValue={totalVotesD}
-                        lineWidth={20}
-                        label={({ dataEntry }) => `${Math.round(data.dFor / totalVotesD * 100 )}%`}
-                        labelStyle={{
-                            fontWeight: 'bold',
-                            fill: '#2F80ED',
-                        }}
-                        labelPosition={0}
-                        />
-                        <p>
-                        For: {data.dFor}  <br/>
-                        Against:  {data.dAgainst}
-                        </p> */}
+                        <PieChartComponent voteType={voteType} totalVotes={totalVotesD} voteFor={data.gsx$dfor.$t} voteAgainst={data.gsx$dagainst.$t} primaryColor="#2F80ED" secondaryColor="#EFEFEF" />
                     </Content>
                 </Column>
             </Column.Group>

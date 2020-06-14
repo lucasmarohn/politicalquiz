@@ -30,8 +30,8 @@ function ResultTotalBox({sourceData, answerData, handleRestartQuiz}) {
         const answer = answerData[index]
 
         // Get percentages 
-        const rPercent = Math.round(source.rFor / (source.rFor + source.rAgainst) * 100)
-        const dPercent = Math.round(source.dFor / (source.dFor + source.dAgainst) * 100) 
+        const rPercent = Math.round(parseInt(source.gsx$rfor.$t) / (parseInt(source.gsx$rfor.$t) + parseInt(source.gsx$ragainst.$t)) * 100)
+        const dPercent = Math.round(parseInt(source.gsx$dfor.$t) / (parseInt(source.gsx$dfor.$t) + parseInt(source.gsx$dagainst.$t)) * 100) 
 
         // Returns party with higher "For" percentage
         const partyInFavor = dPercent > rPercent ? 'd' : 'r'
@@ -55,8 +55,8 @@ function ResultTotalBox({sourceData, answerData, handleRestartQuiz}) {
         const answer = answerDataPoint
 
         // Get percentages 
-        const rPercent = Math.round(source.rFor / (source.rFor + source.rAgainst) * 100)
-        const dPercent = Math.round(source.dFor / (source.dFor + source.dAgainst) * 100) 
+        const rPercent = Math.round(source.gsx$rfor.$t / (source.gsx$rfor.$t + source.gsx$ragainst.$t) * 100)
+        const dPercent = Math.round(source.gsx$dfor.$t / (source.gsx$dfor.$t + source.gsx$dagainst.$t) * 100) 
 
         // Returns party with higher "For" percentage
         const partyInFavor = dPercent > rPercent ? 'd' : 'r'
@@ -116,7 +116,7 @@ function ResultTotalBox({sourceData, answerData, handleRestartQuiz}) {
                                                     <Tag>{index + 1}</Tag>
                                                 </Column>
                                                 <Column>
-                                                    <Title style={{marginBottom: '5px'}} size={6}>{sourceData[index].title}</Title>
+                                                    <Title style={{marginBottom: '5px'}} size={6}>{sourceData[index].gsx$title.$t}</Title>
                                                     <Tag.Group gapless>
                                                         <Tag size="small" color={whoAgrees(index) === 'Democrat' ? 'link' : 'danger'}>You voted {data} with the {whoAgrees(index)}s</Tag> 
                                                         <Tag>Click for more information</Tag>
